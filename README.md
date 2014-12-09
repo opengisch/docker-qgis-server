@@ -2,6 +2,7 @@ docker-qgis-server-webclient
 ============================
 
 A simple docker container that runs QGIS MapServer complete with a QGIS web client.
+it Is based on http://github.com/opengisch/docker-qgis-server
 
 
 **Note** this is a demonstrator project only and you should revise the security
@@ -45,10 +46,11 @@ publish and all the data should be relative to the project files and within the
 mounted volume.
 
 
-Also consider looking at https://github.com/opengisch/docker-qgis-orchestration
+Also consider looking at https://github.com/kartoza/docker-qgis-orchestration
 which provides a cloud infrastructure including QGIS Server.
 
 -----------
-
+Marco Bernasocchi (marco@opengis.ch)
+December 2014
 Tim Sutton (tim@linfiniti.com)
 May 2014
