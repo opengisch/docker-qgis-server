@@ -1,1 +1,1 @@
-docker run --name="qgis-server" -v `pwd`/web:/web  -d -t kartoza/qgis-server
+docker run --name="qgis-server-webclient" -v `pwd`/web:/web  -d -t opengisch/qgis-server-webclient
