@@ -18,12 +18,9 @@ RUN apt-get -y update
 
 #-------------Application Specific Stuff ----------------------------------------------------
 
-
-RUN apt-get install -y qgis qgis-mapserver apache2 libapache2-mod-fcgid
+RUN apt-get install -y qgis qgis-server apache2 libapache2-mod-fcgid libapache2-mod-php5 git locate
 
 EXPOSE 80
-
-ADD apache.conf /etc/apache2/sites-available/default
 ADD fcgid.conf /etc/apache2/mods-available/fcgid.conf
 
 # Set up the postgis services file
@@ -44,5 +41,19 @@ ADD pg_service.conf /etc/pg_service.conf
 # pg service file
 ENV PGSERVICEFILE /etc/pg_service.conf
 
+# Install the client
+#ADD web-client /QGIS-Web-Client
+RUN git clone https://github.com/opengis-ch/QGIS-Web-Client.git
+WORKDIR QGIS-Web-Client
+RUN git checkout add-install-script
+RUN git pull && echo 'change this string to force a new checkout on build'
+
+#setup the web client using
+# /web as QGISPROJECTSDIR default vhost
+# on localhost with mod_rewrite
+# and without (re)starting apache
+RUN ./install.sh /web localhost true true false
+
+WORKDIR /
 # Now launch apache in the foreground
 CMD apachectl -D FOREGROUND
