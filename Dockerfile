@@ -45,16 +45,16 @@ ENV PGSERVICEFILE /etc/pg_service.conf
 
 # Install the client
 #ADD web-client /QGIS-Web-Client
-RUN git clone https://github.com/opengis-ch/QGIS-Web-Client.git
+RUN git clone https://github.com/opengis-ch/QGIS-Web-Client.git #force clear cache
 WORKDIR QGIS-Web-Client
 RUN git checkout add-install-script
-RUN git pull && echo 'change this string to force a new checkout on build'
+RUN git reset --hard && git pull #force clear cache
 
 #setup the web client using
 # /web as QGISPROJECTSDIR default vhost
 # on localhost with mod_rewrite
 # and without (re)starting apache
-RUN ./install.sh /web localhost true true false
+RUN ./install.sh -y /web localhost true true false
 
 WORKDIR /
 # Now launch apache in the foreground
