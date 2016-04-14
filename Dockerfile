@@ -22,7 +22,9 @@ RUN apt-get -y update
 
 RUN apt-get install -y qgis qgis-server apache2 libapache2-mod-fcgid libapache2-mod-php5 git locate
 
+
 EXPOSE 80
+ADD apache.conf /etc/apache2/sites-enabled/000-default.conf
 ADD fcgid.conf /etc/apache2/mods-available/fcgid.conf
 
 # Set up the postgis services file
@@ -37,8 +39,6 @@ ADD fcgid.conf /etc/apache2/mods-available/fcgid.conf
 # connection ssl option set to require
 
 ADD pg_service.conf /etc/pg_service.conf
-#USER www-data
-
 # This is so the qgis mapserver uses the correct
 # pg service file
 ENV PGSERVICEFILE /etc/pg_service.conf
